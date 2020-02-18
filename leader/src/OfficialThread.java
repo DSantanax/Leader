@@ -10,7 +10,7 @@ public class OfficialThread implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(of.name + " rank: " + of.rank);
+        System.out.println(of.name + " rank: " + of.rank + " lead: " + of.lead);
         of.guess();
         of.notifyRankThread();
 

@@ -4,7 +4,7 @@ public class Official {
     public LinkedBlockingQueue<String> lbq = new LinkedBlockingQueue<>();
     public String name;
     public int rank;
-    private Boolean lead;
+    public Boolean lead;
     private String leader;
     private Ranking rnk;
     private String guess;
