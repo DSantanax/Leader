@@ -21,6 +21,6 @@ public class OfficialThread implements Runnable {
             of.setLeader();
         }
         of.checkGuess();
-        
+
     }
 }

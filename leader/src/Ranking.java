@@ -25,32 +25,34 @@ public class Ranking implements Runnable {
             waitCreation();
             inc++;
         }
-        //free remaining
-        synchronized(lock2){lock2.notifyAll();}
+        // free remaining
+        synchronized (lock2) {
+            lock2.notifyAll();
+        }
 
         System.out.println("Ranked Finished");
     }
+
     public void waitCreation() {
         synchronized (lock1) {
             try {
                 System.out.println("Ranked waiting");
                 lock1.wait();
             } catch (InterruptedException e) {
-                }
+            }
 
             System.out.println("Notified ranked");
             Iterator<Integer> itr = lbq.iterator();
             int tempMax = (Integer) itr.next();
-            
-            while(itr.hasNext()){
+
+            while (itr.hasNext()) {
                 int val;
-                if((val = itr.next()) > tempMax){
+                if ((val = itr.next()) > tempMax) {
                     tempMax = val;
                 }
             }
-            
-            System.out.println(tempMax);
-            if(max != tempMax){
+
+            if (max != tempMax) {
                 max = tempMax;
                 performRanking();
             }
@@ -66,7 +68,7 @@ public class Ranking implements Runnable {
     }
 
     private void performRanking() {
-        synchronized(lock2){
+        synchronized (lock2) {
             System.out.println("Rank notifying all");
             lock2.notifyAll();
         }
@@ -77,22 +79,24 @@ public class Ranking implements Runnable {
             try {
                 System.out.println(name + " waiting");
                 lock2.wait();
-            } catch (InterruptedException e) { }
-            System.out.println(name + " notified");
+            } catch (InterruptedException e) {
             }
+            System.out.println(name + " notified");
+        }
     }
 
     public synchronized boolean checkLeader(String name) {
-           int val = hmp.get(name);
-            if(max==val){
-                System.out.println("I am leader " + name);
-                leader = name;
-                return true;
-            }
-            return false;
+        int val = hmp.get(name);
+        if (max == val) {
+            System.out.println("I am leader " + name);
+            leader = name;
+            return true;
+        }
+        return false;
     }
-	public synchronized String setTheLeader(String name) {
-		return leader;
+
+    public synchronized String setTheLeader(String name) {
+        return leader;
     }
 
 }
